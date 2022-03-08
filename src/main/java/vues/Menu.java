@@ -15,11 +15,10 @@ import javafx.stage.Stage;
 public class Menu extends Vue implements VueInteractive {
    private Controleur controleur;
 
-    public static Menu creerVue(Controleur controleur, Stage stage) {
+    public static Menu creerVue(GestionnaireVue gestionnaireVue) {
         Menu menu = new Menu();
         menu.initialiserVue();
-        menu.setControleur(controleur);
-        menu.setStage(stage);
+        gestionnaireVue.ajouterVueInteractive(menu);
         return menu;
     }
 

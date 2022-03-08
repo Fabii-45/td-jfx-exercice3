@@ -13,7 +13,7 @@ import vues.TousLesFilms;
 import java.util.Collection;
 import java.util.Objects;
 
-public class Controleur {
+public class Controleur implements LanceurOrdre {
     private Menu menu;
     private TousLesFilms tousLesFilms;
     private Ajout ajout;
@@ -87,5 +87,15 @@ public class Controleur {
 
     public Collection<Film> getLesFilms() {
         return  facadeScreen.getAllFilms();
+    }
+
+    @Override
+    public void abonnement(EcouteurOrdre ecouteurOrdre, TypeOrdre... types) {
+
+    }
+
+    @Override
+    public void fireOrdre(TypeOrdre e) {
+
     }
 }

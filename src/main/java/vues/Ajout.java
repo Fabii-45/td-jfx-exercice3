@@ -1,6 +1,9 @@
 package vues;
 
 import controleur.Controleur;
+import controleur.EcouteurOrdre;
+import controleur.LanceurOrdre;
+import controleur.TypeOrdre;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Ajout extends Vue implements VueInteractive {
+public class Ajout extends Vue implements VueInteractive, EcouteurOrdre {
     private Controleur controleur;
 
     @FXML
@@ -36,7 +39,7 @@ public class Ajout extends Vue implements VueInteractive {
     }
 
 
-    public static Ajout creerVue(Controleur controleur, Stage stage)  {
+    public static Ajout creerVue(GestionnaireVue gestionnaireVue)  {
         FXMLLoader fxmlLoader = new FXMLLoader(Ajout.class.getResource("ajout.fxml"));
         try {
             fxmlLoader.load();
@@ -45,9 +48,8 @@ public class Ajout extends Vue implements VueInteractive {
         }
 
         Ajout vue = fxmlLoader.getController();
-        vue.setControleur(controleur);
-        vue.genre.setItems(FXCollections.observableList(new ArrayList<>(controleur.getGenres())));
-        vue.setStage(stage);
+        gestionnaireVue.ajouterVueInteractive(vue);
+        gestionnaireVue.ajouterEcouteurOrdre(vue);
         vue.setScene(new Scene(vue.getTop()));
         return vue;
     }
@@ -80,6 +82,16 @@ public class Ajout extends Vue implements VueInteractive {
         Alert alert = new Alert(Alert.AlertType.ERROR,message);
         alert.setTitle(titre);
         alert.showAndWait();
+
+    }
+
+    @Override
+    public void setAbonnement(LanceurOrdre g) {
+
+    }
+
+    @Override
+    public void traiter(TypeOrdre e) {
 
     }
 }
