@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-abstract class GestionnaireVue implements EcouteurOrdre,VueInteractive {
+public abstract class GestionnaireVue implements EcouteurOrdre,VueInteractive {
     private Stage stage;
     private Controleur controleur;
     private Collection<EcouteurOrdre> ecouteurOrdres;
@@ -41,6 +41,8 @@ abstract class GestionnaireVue implements EcouteurOrdre,VueInteractive {
     public void traiter(TypeOrdre e) {
 
     }
+
+    public Stage getStage(){return stage;}
 
     public void ajouterVueInteractive(VueInteractive vue){
         vuesInteractives.add(vue);

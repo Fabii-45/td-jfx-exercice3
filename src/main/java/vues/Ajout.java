@@ -69,8 +69,9 @@ public class Ajout extends Vue implements VueInteractive, EcouteurOrdre {
     }
 
     public void creerFilm(ActionEvent actionEvent) {
-        controleur.creerFilm(titre.getText(), genre.getSelectionModel().getSelectedItem(), realisateur.getText());
+        //controleur.creerFilm(titre.getText(), genre.getSelectionModel().getSelectedItem(), realisateur.getText());
     }
+
 
     public void viderChamps() {
         titre.setText("");
@@ -87,11 +88,19 @@ public class Ajout extends Vue implements VueInteractive, EcouteurOrdre {
 
     @Override
     public void setAbonnement(LanceurOrdre g) {
+        g.abonnement(this, TypeOrdre.CHARGER_GENRES);
+        //elle écoute d'autres ordres
 
     }
 
     @Override
     public void traiter(TypeOrdre e) {
+        switch(e){
+            case CHARGER_GENRES:{
+                chargerGenres();
+                break;
+            }
 
+        }
     }
 }

@@ -14,5 +14,5 @@ public interface EcouteurOrdre {
          * @param e
          */
         void traiter(TypeOrdre e);
-    }
+
 }

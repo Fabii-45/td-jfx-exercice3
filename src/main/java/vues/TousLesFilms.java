@@ -1,6 +1,9 @@
 package vues;
 
 import controleur.Controleur;
+import controleur.EcouteurOrdre;
+import controleur.LanceurOrdre;
+import controleur.TypeOrdre;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class TousLesFilms extends Vue implements VueInteractive {
+public class TousLesFilms extends Vue implements VueInteractive, EcouteurOrdre {
     private Controleur controleur;
 
     @FXML
@@ -30,7 +33,7 @@ public class TousLesFilms extends Vue implements VueInteractive {
         return mainVbox;
     }
 
-    public static TousLesFilms creerVue(Controleur controleur, Stage stage) {
+    public static TousLesFilms creerVue(GestionnaireVue gestionnaireVue) {
         FXMLLoader fxmlLoader = new FXMLLoader(TousLesFilms.class.getResource("tousLesFilms.fxml"));
         try {
             fxmlLoader.load();
@@ -39,8 +42,8 @@ public class TousLesFilms extends Vue implements VueInteractive {
         }
         TousLesFilms vue = fxmlLoader.getController();
 
-        vue.setControleur(controleur);
-        vue.setStage(stage);
+        gestionnaireVue.ajouterVueInteractive(vue);
+        gestionnaireVue.ajouterEcouteurOrdre(vue);
         vue.setScene(new Scene(vue.getTop()));
         return vue;
 
@@ -57,7 +60,7 @@ public class TousLesFilms extends Vue implements VueInteractive {
 
 
 
-    @Override
+    //@Override
     public void show() {
         Collection<Film> films = controleur.getLesFilms();
         this.lesFilms.setItems(FXCollections.observableList(new ArrayList<>(films)));
@@ -72,6 +75,28 @@ public class TousLesFilms extends Vue implements VueInteractive {
                 }
             }
         });
-        super.show();
+        //super.show();
+    }
+
+    @Override
+    public void setAbonnement(LanceurOrdre g) {
+        g.abonnement(this, TypeOrdre.CHARGER_FILMS);
+    }
+
+    public  void chargerFilms(){
+        Collection<Film> films = controleur.getLesFilms();
+        this.lesFilms.setItems(FXCollections.observableList(new ArrayList<>(films)));
+    }
+
+    @Override
+    public void traiter(TypeOrdre e) {
+        switch(e){
+            case CHARGER_FILMS:{
+                chargerFilms();
+                break;
+            }
+
+        }
+
     }
 }
