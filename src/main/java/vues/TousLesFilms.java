@@ -4,6 +4,7 @@ import controleur.Controleur;
 import controleur.EcouteurOrdre;
 import controleur.LanceurOrdre;
 import controleur.TypeOrdre;
+import facadeCreaFilm.GenreNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,11 +81,17 @@ public class TousLesFilms extends Vue implements VueInteractive, EcouteurOrdre {
 
     @Override
     public void setAbonnement(LanceurOrdre g) {
-        g.abonnement(this, TypeOrdre.CHARGER_FILMS);
+        g.abonnement(this, TypeOrdre.CHARGER_FILMS,TypeOrdre.CHARGER_FILMS_PAR_GENRE);
     }
+    //+CHARGERFILMPARGENRE
 
     public  void chargerFilms(){
         Collection<Film> films = controleur.getLesFilms();
+        this.lesFilms.setItems(FXCollections.observableList(new ArrayList<>(films)));
+    }
+
+    public  void chargerFilmsParGenre() throws GenreNotFoundException {
+        Collection<Film> films = controleur.getLesFilmsDuGenre();
         this.lesFilms.setItems(FXCollections.observableList(new ArrayList<>(films)));
     }
 
@@ -93,6 +100,10 @@ public class TousLesFilms extends Vue implements VueInteractive, EcouteurOrdre {
         switch(e){
             case CHARGER_FILMS:{
                 chargerFilms();
+                break;
+            }
+            case CHARGER_FILMS_PAR_GENRE:{
+                chargerFilmsParGenre();
                 break;
             }
 

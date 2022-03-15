@@ -40,7 +40,11 @@ public class Menu extends Vue implements VueInteractive {
         gotoConsulter.setFont(Font.font(24));
         gotoConsulter.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-        vBox.getChildren().addAll( gotoConsulter, gotoAjouter);
+        Button gotoConsulterFilmGenre = new Button("Consulter Films Par Genre");
+        gotoConsulter.setFont(Font.font(24));
+        gotoConsulter.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        vBox.getChildren().addAll( gotoConsulter, gotoAjouter, gotoConsulterFilmGenre);
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(40);
 
@@ -54,6 +58,12 @@ public class Menu extends Vue implements VueInteractive {
             @Override
             public void handle(ActionEvent actionEvent) {
                 controleur.gotoAjout();
+            }
+        });
+        gotoConsulterFilmGenre.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                controleur.gotoConsulterFilmGenre();
             }
         });
 

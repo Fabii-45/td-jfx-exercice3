@@ -11,6 +11,7 @@ public class GestionnaireVueFilm extends GestionnaireVue {
     private Menu menu;
     private Ajout ajout;
     private TousLesFilms tousLesFilms;
+    private ChoixGenre choixGenre;
 
 
     public GestionnaireVueFilm(Stage stage) {
@@ -18,6 +19,7 @@ public class GestionnaireVueFilm extends GestionnaireVue {
         menu=Menu.creerVue(this);
         ajout=Ajout.creerVue(this);
         tousLesFilms=TousLesFilms.creerVue(this);
+        choixGenre=ChoixGenre.creerVue(this);
     }
 
     @Override
@@ -38,12 +40,17 @@ public class GestionnaireVueFilm extends GestionnaireVue {
                 getStage().show();
                 break;
             }
+            case SHOW_FILMSGENRE: {
+                this.getStage().setScene(choixGenre.getScene());
+                getStage().show();
+                break;
+            }
         }
     }
 
     @Override
     public void setAbonnement(LanceurOrdre g) {
-        g.abonnement(this, TypeOrdre.SHOW_AJOUT, TypeOrdre.SHOW_MENU);
+        g.abonnement(this, TypeOrdre.SHOW_AJOUT, TypeOrdre.SHOW_MENU,TypeOrdre.SHOW_FILMS,TypeOrdre.SHOW_FILMSGENRE);
         super.setAbonnement(g);
     }
 }

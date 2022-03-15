@@ -69,7 +69,7 @@ public class Ajout extends Vue implements VueInteractive, EcouteurOrdre {
     }
 
     public void creerFilm(ActionEvent actionEvent) {
-        //controleur.creerFilm(titre.getText(), genre.getSelectionModel().getSelectedItem(), realisateur.getText());
+        controleur.creerFilm(titre.getText(), genre.getSelectionModel().getSelectedItem(), realisateur.getText());
     }
 
 
@@ -88,7 +88,7 @@ public class Ajout extends Vue implements VueInteractive, EcouteurOrdre {
 
     @Override
     public void setAbonnement(LanceurOrdre g) {
-        g.abonnement(this, TypeOrdre.CHARGER_GENRES);
+        g.abonnement(this, TypeOrdre.CHARGER_GENRES,TypeOrdre.NOM_EXISTANT,TypeOrdre.GENRE_INEXISTANT,TypeOrdre.CHAMPS_VIDE,TypeOrdre.VIDER_CHAMPS);
         //elle écoute d'autres ordres
 
     }
@@ -100,7 +100,22 @@ public class Ajout extends Vue implements VueInteractive, EcouteurOrdre {
                 chargerGenres();
                 break;
             }
-
+            case VIDER_CHAMPS:{
+                viderChamps();
+                break;
+            }
+            case NOM_EXISTANT:{
+                afficherErreur("Nom déjà existant", "Le nom du film existe déjà");
+                break;
+            }
+            case GENRE_INEXISTANT:{
+                afficherErreur("Genre non existant", "Le genre du film est inconnu");
+                break;
+            }
+            case CHAMPS_VIDE:{
+                afficherErreur("Erreur saisie","Les champs ne peuvent être vides !");
+                break;
+            }
         }
     }
 }

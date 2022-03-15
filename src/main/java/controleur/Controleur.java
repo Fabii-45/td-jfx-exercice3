@@ -33,9 +33,8 @@ public class Controleur implements LanceurOrdre {
 
 
     public void run() {
-        fireOrdre(TypeOrdre.CHARGER_FILMS);
-        fireOrdre(TypeOrdre.CHARGER_GENRES);
-        gotoMenu();
+        this.fireOrdre(TypeOrdre.CHARGER_GENRES);
+        this.gotoMenu();
     }
 
     public void gotoFilms() {
@@ -45,36 +44,39 @@ public class Controleur implements LanceurOrdre {
 
 
     public void gotoConsulter() {
-
-        fireOrdre(TypeOrdre.CHARGER_GENRES);
+        fireOrdre(TypeOrdre.CHARGER_FILMS);
+        fireOrdre(TypeOrdre.SHOW_FILMS);
     }
 
     public void gotoMenu() { fireOrdre(TypeOrdre.SHOW_MENU);}
 
-    /*
+
     public void creerFilm(String titre, GenreFilm genre, String realisateur)  {
         if (Objects.isNull(titre)||Objects.isNull(genre)||Objects.isNull(realisateur)||titre.equals("")||realisateur.equals("")){
-            ajout.afficherErreur("Erreur saisie","Les champs ne peuvent être vides !");
-            showAjout();
+            fireOrdre(TypeOrdre.CHAMPS_VIDE);
+            fireOrdre(TypeOrdre.SHOW_AJOUT);
         }
         else {
             try {
                 facadeScreen.creerFilm(titre, realisateur, genre);
-                ajout.viderChamps();
-                showMenu();
+                fireOrdre(TypeOrdre.CHARGER_FILMS);
+                fireOrdre(TypeOrdre.VIDER_CHAMPS);
+                fireOrdre(TypeOrdre.SHOW_MENU);
 
             } catch (GenreNotFoundException e) {
-                ajout.afficherErreur("Erreur de genre", "Genre inexistant !");
-                ajout.viderChamps();
-                showAjout();
+                fireOrdre(TypeOrdre.VIDER_CHAMPS);
+                fireOrdre(TypeOrdre.GENRE_INEXISTANT);
+                fireOrdre(TypeOrdre.SHOW_AJOUT);
             } catch (NomFilmDejaExistantException e) {
-                ajout.afficherErreur("Erreur de film", "Le titre du film existe déjà !");
-                ajout.viderChamps();
-                showAjout();
+                fireOrdre(TypeOrdre.VIDER_CHAMPS);
+                fireOrdre(TypeOrdre.NOM_EXISTANT);
+                fireOrdre(TypeOrdre.SHOW_AJOUT);
             }
         }
     }
-    */
+
+
+
 
     public void gotoAjout() {
         fireOrdre(TypeOrdre.SHOW_AJOUT);
@@ -86,6 +88,11 @@ public class Controleur implements LanceurOrdre {
 
     public Collection<Film> getLesFilms() {
         return  facadeScreen.getAllFilms();
+    }
+
+    public Collection<Film> getLesFilmsDuGenre() throws GenreNotFoundException {
+        String genre =
+        return facadeScreen.getFilmsDuGenre(genre);
     }
 
     @Override
@@ -106,5 +113,9 @@ public class Controleur implements LanceurOrdre {
         });
          */
         abonnes.get(e).forEach(ecouteurOrdre -> ecouteurOrdre.traiter(e));
+    }
+
+    public void gotoConsulterFilmGenre() {
+        fireOrdre(TypeOrdre.SHOW_FILMSGENRE);
     }
 }
